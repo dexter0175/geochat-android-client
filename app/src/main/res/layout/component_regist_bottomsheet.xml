@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/regist_bottomsheet_root"
+    android:layout_width="match_parent"
+    android:layout_height="520dp"
+    android:background="@android:color/darker_gray"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:elevation="5dp"
+
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:background="@color/md_white_1000"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="19dp"
+        android:paddingBottom="20dp"
+        android:elevation="0dp">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/regist_bottomsheet_form_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textSize="18sp"
+            android:hint="@string/regist_placeholder_email"
+            app:met_floatingLabel="normal"
+            app:met_primaryColor="@color/geochatAccent"
+            android:theme="@style/RegistrationTextField" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/regist_bottomsheet_form_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="18sp"
+            android:hint="@string/regist_placeholder_password"
+            app:met_floatingLabel="normal"
+            app:met_primaryColor="@color/geochatAccent"
+            android:theme="@style/RegistrationTextField" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/regist_bottomsheet_form_firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="18sp"
+            android:hint="@string/regist_placeholder_firstname"
+            app:met_floatingLabel="normal"
+            app:met_primaryColor="@color/geochatAccent"
+            android:theme="@style/RegistrationTextField" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/regist_bottomsheet_form_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="18sp"
+            android:hint="@string/regist_placeholder_lastname"
+            app:met_floatingLabel="normal"
+            app:met_primaryColor="@color/geochatAccent"
+            android:theme="@style/RegistrationTextField" />
+
+        <Button
+            android:id="@+id/regist_bottomsheet_form_createaccount_button"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textSize="7pt"
+            android:fontFamily="@font/hind"
+            android:text="@string/regist_create_account_button"
+            android:backgroundTint="@color/geochatAccent"
+            android:textColor="@color/md_white_1000"
+            android:elevation="1dp" />
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="7pt"
+            android:text="@string/regist_caption_or"/>
+
+        <Button
+            android:id="@+id/regist_bottomsheet_form_signin_button"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textSize="7pt"
+            android:fontFamily="@font/hind"
+            android:text="@string/regist_signin_button"
+            android:backgroundTint="@color/md_grey_100"
+            android:elevation="1dp" />
+
+
+        <Button
+            android:id="@+id/regist_bottomsheet_setting_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/hind"
+            android:text="API URL Setting"
+            android:backgroundTint="@color/md_grey_100" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

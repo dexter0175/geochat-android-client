@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context=".MapActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="18sp"
+        android:background="@drawable/map_hint_header_background"
+        android:text="@string/map_hint" />
+
+    <Button
+        android:id="@+id/map_button_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="60dp"
+        android:background="#ccffffff"
+        android:text="Done!" />
+    <SeekBar
+        android:layout_width="268dp"
+        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:id="@+id/seek_bar"/>
+
+</FrameLayout>

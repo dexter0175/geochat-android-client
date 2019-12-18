@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.siarhei.apps.android.geochat.RegistrationActivity"
+    android:background="@drawable/regist_gradient"
+
+    android:elevation="2dp"
+    >
+
+    <androidx.viewpager.widget.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/regist_welcomeinfo_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <!-- include registration bottom sheet -->
+    <include layout="@layout/component_regist_bottomsheet" />
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

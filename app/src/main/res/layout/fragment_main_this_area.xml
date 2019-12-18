@@ -1,0 +1,87 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="co.siarhei.apps.android.geochat.UI.MainThisAreaFragment">
+
+
+    <LinearLayout
+        android:id="@+id/main_this_area_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_message"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/main_this_area_mapbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_white_1000"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp">
+
+
+            <TextView
+                android:id="@+id/main_this_area_mapbutton_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location Address Description"
+                android:textStyle="bold"
+                android:textColor="@color/md_black_1000"/>
+
+            <TextView
+                android:id="@+id/main_this_area_mapbutton_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location Lat &amp; Long"
+                android:textColor="@color/md_black_1000"/>
+
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_this_area_messagelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:id="@+id/bottom_message"
+        android:background="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_send"
+            android:background="@android:color/transparent"
+            android:hint="Type your message..."
+            android:layout_toStartOf="@id/btn_send"
+            android:layout_centerVertical="true"/>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_send_black_24dp"
+            android:id="@+id/btn_send"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>
