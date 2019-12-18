@@ -12,9 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,13 +47,12 @@ import co.siarhei.apps.android.geochat.Location.UserLocation;
 import co.siarhei.apps.android.geochat.Model.User;
 import co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter;
 import co.siarhei.apps.android.geochat.UI.MainExploreFragment;
-import co.siarhei.apps.android.geochat.UI.MainSentMessagesFragment;
+import co.siarhei.apps.android.geochat.UI.MainConnectionsFragment;
 import co.siarhei.apps.android.geochat.UI.MainThisAreaFragment;
 import co.siarhei.apps.android.geochat.Utils.Util;
 import durdinapps.rxfirebase2.RxFirestore;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener
@@ -95,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements
         vDrawerNavView.setNavigationItemSelectedListener(this);
 
 
-        // Drawer Panel Configure Animation Details
+
         AnimationDrawable animationDrawable =
                 (AnimationDrawable) vDrawerNavView.getHeaderView(0).getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -103,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements
         animationDrawable.start();
 
 
-        // Setup Action Bar (Toolbar)
+
         vToolbar = findViewById(R.id.main_toolbar);
         final ActionBar actionBar = getSupportActionBar();
         setSupportActionBar(vToolbar);
@@ -117,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements
             actionBar.setHomeAsUpIndicator(R.drawable.geochat_logo_large_foreground);
         }
 
-        setCurrentLocation(53.971756, 27.566803);
+        //setCurrentLocation(53.971756, 27.566803);
         setupMaterialTabs();
         authoriseGeolocationFunctionality();
         setupGeolocationUpdates();
@@ -177,30 +174,13 @@ public class MainActivity extends AppCompatActivity implements
         pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
 
         pagerAdapter.addFragment(new MainThisAreaFragment(), "THIS AREA");
-        pagerAdapter.addFragment(new MainSentMessagesFragment(), "SENT MESSAGES");
+        pagerAdapter.addFragment(new MainConnectionsFragment(), "CONNECTIONS");
         pagerAdapter.addFragment(new MainExploreFragment(), "EXPLORE");
 
         pager.setAdapter(pagerAdapter);
         tabHost.setupWithViewPager(pager);
 
     }
-
-
-
-//todo move to  fragnemntr
-    public void openMapView() {
-
-        Location currentLocation = getCurrentLocation();
-        Intent intent = new Intent(this, MapActivity.class);
-        intent.putExtra("CURRENT_LOCATION_LAT", currentLocation.getLatitude());
-        intent.putExtra("CURRENT_LOCATION_LONG", currentLocation.getLongitude());
-        startActivity(intent);
-
-    }
-
-
-
-
 
 
 

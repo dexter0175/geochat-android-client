@@ -43,6 +43,7 @@ import co.siarhei.apps.android.geochat.MainActivity;
 import co.siarhei.apps.android.geochat.Model.Message;
 import co.siarhei.apps.android.geochat.R;
 import co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter;
+import co.siarhei.apps.android.geochat.Utils.Util;
 import durdinapps.rxfirebase2.RxFirestore;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -96,7 +97,7 @@ public class MainThisAreaFragment extends Fragment {
         mMapButtonSubtitle = rootView.findViewById(R.id.main_this_area_mapbutton_subtitle);
         mainActivity = (MainActivity) getActivity();
 
-        currentLocation = getCurrentLocation();
+        currentLocation = Util.getCurrentLocation(prefs);
 
         getGoogleAPIKey();
 
@@ -148,12 +149,7 @@ public class MainThisAreaFragment extends Fragment {
         prefs.edit().putLong("locationRadius", Double.doubleToRawLongBits(_radius)).apply();
     }
 
-    public Location getCurrentLocation() {
-        Location _loc = new Location("");
-        _loc.setLatitude(Double.longBitsToDouble(prefs.getLong("locationLat", 0)));
-        _loc.setLongitude(Double.longBitsToDouble(prefs.getLong("locationLong", 0)));
-        return _loc;
-    }
+
 
     public double getCurrentRadius() {
         return Double.longBitsToDouble(prefs.getLong("locationRadius", 0));
@@ -186,7 +182,7 @@ public class MainThisAreaFragment extends Fragment {
 
             // Construct Google Map Static image request URL
             String mapButtonStaticImageURL ="https://maps.googleapis.com/maps/api/staticmap" +
-                    "?center=" + getCurrentLocation().getLatitude() + "," + getCurrentLocation().getLongitude() +
+                    "?center=" + Util.getCurrentLocation(prefs).getLatitude() + "," + Util.getCurrentLocation(prefs).getLongitude() +
                     "&format=png" +
                     "&zoom=16" +
                     "&size=600x600" +
@@ -224,8 +220,8 @@ public class MainThisAreaFragment extends Fragment {
                 .filter((aVoid) -> (mTextSend.getText().toString().length()>=3))
                 .flatMapSingle((aVoid)->{
                     Message msg = new Message(mTextSend.getText().toString());
-                    msg.setOrigin_lat(getCurrentLocation().getLatitude());
-                    msg.setOrigin_long(getCurrentLocation().getLongitude());
+                    msg.setOrigin_lat(Util.getCurrentLocation(prefs).getLatitude());
+                    msg.setOrigin_long(Util.getCurrentLocation(prefs).getLongitude());
 
                     if (!prefs.getBoolean("isAnonymous", false)){
                         msg.setSender( mainActivity.user.first_name);

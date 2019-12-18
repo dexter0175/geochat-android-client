@@ -2,6 +2,8 @@
 package co.siarhei.apps.android.geochat.Utils;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Build;
 
 import java.util.Calendar;
@@ -29,6 +31,13 @@ public class Util {
         }
     }
 
+    static  public Location getCurrentLocation(SharedPreferences prefs) {
+        Location _loc = new Location("");
+
+        _loc.setLatitude(Double.longBitsToDouble(prefs.getLong("locationLat", 0)));
+        _loc.setLongitude(Double.longBitsToDouble(prefs.getLong("locationLong", 0)));
+        return _loc;
+    }
     public static String constructFeedbackContent(Intent data) {
         String answers_json = data.getExtras().getString("answers");
 

@@ -13,15 +13,14 @@ import co.siarhei.apps.android.geochat.R;
 
 public class RegistWelcomeinfoFragment3 extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+
 
     public RegistWelcomeinfoFragment3() { }
 
-    // TODO: Rename and change types and number of parameters
+
     public static RegistWelcomeinfoFragment3 newInstance() {
-        RegistWelcomeinfoFragment3 fragment = new RegistWelcomeinfoFragment3();
-        Bundle args = new Bundle();
-        return fragment;
+
+        return new RegistWelcomeinfoFragment3();
     }
 
     @Override
@@ -36,32 +35,11 @@ public class RegistWelcomeinfoFragment3 extends Fragment {
         return inflater.inflate(R.layout.fragment_regist_welcomeinfo_3, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
 }

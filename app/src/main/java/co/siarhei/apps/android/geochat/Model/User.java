@@ -13,10 +13,10 @@ import co.siarhei.apps.android.geochat.Location.UserLocation;
 
 public class User {
     int id;
+    String fireID;
     public String first_name;
     public String last_name;
     public String email_address;
-    public String password;
     @ServerTimestamp
     Date created_at;
     @ServerTimestamp
@@ -82,18 +82,18 @@ public class User {
         this.email_address = email_address;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFireID() {
+        return fireID;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFireID(String fireID) {
+        this.fireID = fireID;
     }
 
-    public User(String first_name, String last_name, String email_address, String password) {
+    public User(String first_name, String last_name, String email_address) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email_address = email_address;
-        this.password = password;
+
     }
 }

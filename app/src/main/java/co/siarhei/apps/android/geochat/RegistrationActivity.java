@@ -84,7 +84,7 @@ public class RegistrationActivity extends AppCompatActivity implements
     public void setupRegistrationBottomSheet(AppCompatActivity context){
 
 
-        LinearLayout vBottomsheet = (LinearLayout) findViewById(R.id.regist_bottomsheet_root);
+        LinearLayout vBottomsheet =  findViewById(R.id.regist_bottomsheet_root);
 
 
         bottomSheetBehavior = BottomSheetBehavior.from(vBottomsheet);
@@ -132,10 +132,10 @@ public class RegistrationActivity extends AppCompatActivity implements
         _user.first_name = _first_name.getText().toString();
         _user.last_name = _last_name.getText().toString();
         _user.email_address = _email_address.getText().toString();
-        _user.password = _password.getText().toString();
+        _user.setFireID(mAuth.getUid());
 
 
-        RxFirebaseAuth.createUserWithEmailAndPassword(mAuth, _user.email_address, _user.password)
+        RxFirebaseAuth.createUserWithEmailAndPassword(mAuth, _user.email_address,_password.getText().toString())
                 .flatMapCompletable(authResult -> {
                    DocumentReference document = firestore.collection("Users").document(authResult.getUser().getUid());
                    return RxFirestore.setDocument(document,_user);

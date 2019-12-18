@@ -23,9 +23,8 @@ public class RegistWelcomeinfoFragment1 extends Fragment {
 
     // TODO: Rename and change types and number of parameters
     public static RegistWelcomeinfoFragment1 newInstance() {
-        RegistWelcomeinfoFragment1 fragment = new RegistWelcomeinfoFragment1();
-        Bundle args = new Bundle();
-        return fragment;
+
+        return new RegistWelcomeinfoFragment1();
     }
 
     @Override
@@ -45,33 +44,17 @@ public class RegistWelcomeinfoFragment1 extends Fragment {
 
         vBottomsheetTriggerButton.setOnClickListener(v1 -> ((RegistrationActivity) getActivity()).activateBottomSheet());
 
-        // Configures and runs background gradient animation applied to button
+
         AnimationDrawable animationDrawable = (AnimationDrawable) vBottomsheetTriggerButton.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(2000);
         animationDrawable.start();
-
-        // Inflate the layout for this fragment
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+
+
 
     @Override
     public void onDetach() {

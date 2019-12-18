@@ -18,11 +18,10 @@ public class RegistWelcomeinfoFragment2 extends Fragment {
 
     public RegistWelcomeinfoFragment2() { }
 
-    // TODO: Rename and change types and number of parameters
+
     public static RegistWelcomeinfoFragment2 newInstance() {
-        RegistWelcomeinfoFragment2 fragment = new RegistWelcomeinfoFragment2();
-        Bundle args = new Bundle();
-        return fragment;
+
+        return new RegistWelcomeinfoFragment2();
     }
 
     @Override
@@ -33,16 +32,12 @@ public class RegistWelcomeinfoFragment2 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_regist_welcomeinfo_2, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -62,7 +57,7 @@ public class RegistWelcomeinfoFragment2 extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
 }
