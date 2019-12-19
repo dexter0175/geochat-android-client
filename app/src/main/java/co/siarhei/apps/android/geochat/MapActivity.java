@@ -3,15 +3,18 @@
 package co.siarhei.apps.android.geochat;
 
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,22 +31,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,SeekBar.OnSeekBarChangeListener {
 
-    public SeekBar zoomSeekBar;
+
 
     private GoogleMap mMap;
-    private LocationManager locationManager;
-
-    public float lowestZoom = 15f;
-    public float highestZoom = 20f; // 20 is the highest zoom level allowed by Google Maps
-    public float deltaZoom;
 
     public float lowestRadius = 550f;
-    public float highestRadius = 17f;
-    public float deltaRadius;
 
-    public float radiusIncrement;
-
-    public float currentRadius;
 
     Circle circle;
     Location initialLocation;
@@ -62,13 +55,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         SeekBar seekBar = findViewById(R.id.seek_bar);
         seekBar.setOnSeekBarChangeListener(this);
-        // Set provided (current) location as the initial location for the map
+
         this.initialLocation = new Location("");
-        this.initialLocation.setLatitude(getIntent().getDoubleExtra("CURRENT_LOCATION_LAT", new Double(0)));
-        this.initialLocation.setLongitude(getIntent().getDoubleExtra("CURRENT_LOCATION_LONG", new Double(0)));
+        this.initialLocation.setLatitude(getIntent().getDoubleExtra("CURRENT_LOCATION_LAT", (double) 0));
+        this.initialLocation.setLongitude(getIntent().getDoubleExtra("CURRENT_LOCATION_LONG", (double) 0));
 
         Button mapCloseButton = findViewById(R.id.map_button_close);
-        mapCloseButton.setOnClickListener(v -> finish());
+        mapCloseButton.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra("RADIUS",circle.getRadius());
+            setResult(RESULT_OK, intent);
+            finish();
+
+        });
 
     }
 
@@ -78,8 +77,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
-        // Add custom styling ...
         try {
 
             boolean success = googleMap.setMapStyle(
@@ -94,22 +91,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
 
-        // Change Map default camera location ...
         googInitialLocation = new LatLng(this.initialLocation.getLatitude(), this.initialLocation.getLongitude());
-        //mMap.addMarker(new MarkerOptions().position(googInitialLocation).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(googInitialLocation).title("You are here!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(googInitialLocation, 14f));
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(16.75f));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(10f));
 
 
 
-//        mMap.setMinZoomPreference(lowestZoom);
-//        mMap.setMaxZoomPreference(highestZoom);
-
-
-        // Set UI Config for unique map operation
-        mMap.getUiSettings().setAllGesturesEnabled(true);
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
 
@@ -120,40 +111,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             .fillColor(Color.argb(40, 111, 111, 111)));
 
 
-        mMap.setOnCameraIdleListener(getCameraChangeListener());
-
+        mMap.setOnCameraMoveListener(
+        () -> {
+            //mMap.moveCamera(CameraUpdateFactory.newLatLng(googInitialLocation));
+            circle.setCenter(mMap.getCameraPosition().target);
+        });
 
 
     }
-
-
-
-
-    public GoogleMap.OnCameraIdleListener getCameraChangeListener()
-    {
-        return () -> {
-            CameraPosition position = mMap.getCameraPosition();
-
-//                deltaZoom = highestZoom - position.zoom;
-//                deltaRadius = lowestRadius - highestRadius;
-//
-//                radiusIncrement = (lowestRadius - highestRadius) / (highestZoom - lowestZoom);
-//                    // delta(radius) / delta(zoom) = ~77.727272727272..
-//
-//                currentRadius = position.zoom*100;//highestRadius + (deltaZoom * radiusIncrement);
-//
-//
-//                circle.setRadius(currentRadius);
-//                circle.setCenter(mMap.getCameraPosition().target);
-
-
-            Log.i("MAP ZOOM", "Current Zoom Level: "+position.zoom+"\nDzoom: "+deltaZoom+"\nDradius: "+deltaRadius+"\nRincrement: "+radiusIncrement+"\nRcurrent: "+currentRadius+"");
-
-        };
-    }
-
-
-
 
 
 
@@ -161,12 +126,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Toast.makeText(getApplicationContext(),"Radius was not set",Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        circle.setRadius(progress/Math.pow (mMap.getCameraPosition().zoom/50,2));
+        circle.setRadius(progress/Math.pow (mMap.getCameraPosition().zoom/50,2.7));
     }
 
     @Override

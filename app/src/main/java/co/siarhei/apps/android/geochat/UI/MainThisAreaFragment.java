@@ -47,6 +47,7 @@ import co.siarhei.apps.android.geochat.R;
 import co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter;
 import co.siarhei.apps.android.geochat.Utils.Util;
 import durdinapps.rxfirebase2.RxFirestore;
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import okhttp3.Call;
@@ -54,6 +55,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class MainThisAreaFragment extends Fragment {
@@ -115,7 +118,7 @@ public class MainThisAreaFragment extends Fragment {
 
     public void setupMessageListView(){
 
-        Query query = firestore.collection("Messages").orderBy("created_at");
+
         RecyclerView mMessageList = rootView.findViewById(R.id.main_this_area_messagelist);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setStackFromEnd(true);
@@ -123,9 +126,23 @@ public class MainThisAreaFragment extends Fragment {
         messageAdapter = new RvMessageAdapter(getContext(), new ArrayList<>());
         mMessageList.setAdapter(messageAdapter);
 
+        Query query = firestore.collection("Messages").orderBy("created_at");
         cd.add(RxFirestore.observeQueryRef(query,Message.class)
-                .take(100)
+                .flatMapSingle(messages ->
+                        Flowable.fromIterable(messages)
+                                .filter((msg)->{
+                                    Location myLoc = Util.getCurrentLocation(prefs);
+                                    Location userLoc = new Location("");
+                                    userLoc.setLongitude(msg.getOrigin_long());
+                                    userLoc.setLatitude(msg.getOrigin_lat());
+                                    Log.d("MSG1", msg.toString() );
+                                    return myLoc.distanceTo(userLoc) <= 1;
+                                })
+                                .toList()
+                )
                 .subscribe((messages)->{
+
+                    Log.d("MSG2", messages.toString() );
                     messageAdapter.setMessages(messages);
                     mMessageList.smoothScrollToPosition(messageAdapter.getItemCount());
                     }, throwable -> Log.d("ERR",throwable.toString()))
@@ -149,9 +166,8 @@ public class MainThisAreaFragment extends Fragment {
     }
 
     public void setCurrentRadius(double _radius){
-        prefs.edit().putLong("locationRadius", Double.doubleToRawLongBits(_radius)).apply();
+        prefs.edit().putLong("locationRadius", (long) _radius).apply();
     }
-
 
 
     public double getCurrentRadius() {
@@ -233,13 +249,28 @@ public class MainThisAreaFragment extends Fragment {
     }
 
     private void openMapActivity() {
-        Intent intent = new Intent(mainActivity.getApplicationContext(), MapActivity.class);
+        Intent intent = new Intent(getContext(), MapActivity.class);
         intent.putExtra("CURRENT_LOCATION_LAT",currentLocation.getLatitude());
         intent.putExtra("CURRENT_LOCATION_LONG",currentLocation.getLongitude());
 
-        startActivityForResult(intent,);
+        startActivityForResult(intent, 123);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 123 && resultCode == RESULT_OK) {
+            setCurrentRadius(data.getDoubleExtra("RADIUS",0));
+            Log.d("RESULT1", "OnActivityResult");
+            messageAdapter.notifyRadiusChanged();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        messageAdapter.notifyDataSetChanged();
+    }
 
     public void setupMapButtonGeocoding() {
         RxLocation rxLocation = new RxLocation(getContext());
@@ -279,6 +310,7 @@ public class MainThisAreaFragment extends Fragment {
                 })
         );
         }
+
 
 
 

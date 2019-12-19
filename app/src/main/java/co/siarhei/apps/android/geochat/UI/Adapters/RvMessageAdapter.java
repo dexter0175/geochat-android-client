@@ -15,8 +15,10 @@ package co.siarhei.apps.android.geochat.UI.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,19 +36,24 @@ import com.jakewharton.rxbinding3.view.RxView;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import co.siarhei.apps.android.geochat.ChatActivity;
 import co.siarhei.apps.android.geochat.Model.Message;
 import co.siarhei.apps.android.geochat.R;
+import co.siarhei.apps.android.geochat.Utils.Util;
 
 public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.ViewHolder> {
     private Context mContext;
     private List<Message> Messages;
     private String googleAPIKey;
+    SharedPreferences prefs;
+    private List<Message> lastSet;
 
     public RvMessageAdapter(Context mContext, List<Message> mMessages ) {
         this.mContext = mContext;
         this.Messages = mMessages;
+        prefs = mContext.getSharedPreferences("geochat",Context.MODE_PRIVATE);
 
     }
 
@@ -62,6 +69,7 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
         final Message message = Messages.get(i);
 
        // viewHolder.firstLine.setText(message.origin_lat+" "+message.origin_long);
@@ -133,9 +141,23 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
         return Messages;
     }
 
+    public void notifyRadiusChanged(){
+
+        Messages = this. lastSet.stream().filter((msg)->{
+            Location myLoc = Util.getCurrentLocation(prefs);
+            Location userLoc = new Location("");
+            userLoc.setLongitude(msg.getOrigin_long());
+            userLoc.setLatitude(msg.getOrigin_lat());
+            double radius = prefs.getLong("locationRadius",0);
+
+            return myLoc.distanceTo(userLoc) <= radius;
+        }).collect(Collectors.toList());
+        Log.d("RAD",String.valueOf(prefs.getLong("locationRadius",0)) );
+    }
+
     public void setMessages(List<Message> Messages) {
+        this.lastSet = Messages;
         this.Messages = Messages;
-        notifyDataSetChanged();
     }
     public void addMessage( Message msg) {
 

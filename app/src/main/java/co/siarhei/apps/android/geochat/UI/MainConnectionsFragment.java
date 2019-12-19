@@ -47,6 +47,7 @@ public class MainConnectionsFragment extends Fragment {
     private CompositeDisposable cd = new CompositeDisposable();
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,6 @@ public class MainConnectionsFragment extends Fragment {
 
         setupRecyclerView();
         setupReactiveGeoUpdates();
-
 
 
         return rootView;
@@ -92,12 +92,10 @@ public class MainConnectionsFragment extends Fragment {
                                     .replace(mAuth.getUid(), "")
                                     .replace("_", ""))
                 .flatMap(id->{
-                    Log.d("#ID",id);
                     DocumentReference docref = firestore.collection("Users").document(id);
                     return RxFirestore.observeDocumentRef(docref,User.class);
                 })
                 .subscribe(user -> {
-                    Log.d("#ID2", user.toString());
                     usersAdapter.addUser(user);
                     usersAdapter.notifyDataSetChanged();
                 },throwable -> Log.d("ERR:", throwable.toString()));

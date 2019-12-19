@@ -13,6 +13,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.androidadvance.androidsurvey.SurveyActivity;
@@ -325,7 +327,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // in panekl
         switch (item.getItemId()) {
             
             case R.id.main_drawer_nav_item_signout: {
@@ -363,7 +364,6 @@ public class MainActivity extends AppCompatActivity implements
 
         }
 
-        //close navigation drawer
         vDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -372,12 +372,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
+        super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == FEEDBACK_QUIZ_REQUEST) {
+
             if (resultCode == RESULT_OK) {
-
-
 
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:"));
@@ -408,8 +406,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-
-        // TODO SETUP REMOVEUPDATES
 
     }
 
