@@ -4,6 +4,7 @@ package co.siarhei.apps.android.geochat.UI;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,8 +80,17 @@ public class MainExploreFragment extends Fragment {
 
         Disposable dp = RxFirestore.observeQueryRef(ref,User.class)
                 .flatMapIterable(query->query)
-                .filter(user-> user.getFireID().contains(mAuth.getUid()))
+                .filter(user-> !user.getFireID().contains(mAuth.getUid()))
                 .filter(user->Util.isOnline( user.getUpdated_at() ))
+                .filter((user)->{
+                    Location myLoc = Util.getCurrentLocation(prefs);
+                    Location userLoc = new Location("");
+                    userLoc.setLongitude(user.getLocation().getLng());
+                    userLoc.setLatitude(user.getLocation().getLat());
+                    double radius = getCurrentRadius();
+                    return myLoc.distanceTo(userLoc) <= radius;
+
+                })
                 .subscribe(user -> {
                     Log.d("#ID2", user.toString());
                     usersAdapter.addUser(user);
@@ -89,6 +99,10 @@ public class MainExploreFragment extends Fragment {
 
         cd.add(dp);
 
+    }
+
+    public double getCurrentRadius() {
+        return prefs.getLong("locationRadius", 0);
     }
 
 

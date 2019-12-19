@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity implements
         pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
 
         pagerAdapter.addFragment(new MainThisAreaFragment(), "THIS AREA");
-        pagerAdapter.addFragment(new MainConnectionsFragment(), "CONNECTIONS");
-        pagerAdapter.addFragment(new MainExploreFragment(), "EXPLORE");
+        pagerAdapter.addFragment(new MainConnectionsFragment(), "CHATS");
+        pagerAdapter.addFragment(new MainExploreFragment(), "NEARBY");
 
         pager.setAdapter(pagerAdapter);
         tabHost.setupWithViewPager(pager);
