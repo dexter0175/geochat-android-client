@@ -41,6 +41,7 @@ import java.util.stream.Collectors;
 import co.siarhei.apps.android.geochat.ChatActivity;
 import co.siarhei.apps.android.geochat.Model.Message;
 import co.siarhei.apps.android.geochat.R;
+import co.siarhei.apps.android.geochat.UserOnMap;
 import co.siarhei.apps.android.geochat.Utils.Util;
 
 public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.ViewHolder> {
@@ -84,7 +85,14 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
         }
 
 
-            RxView.clicks(viewHolder.marker).subscribe((aVoid)-> Toast.makeText(mContext,"Got to map",Toast.LENGTH_SHORT).show() );
+            RxView.clicks(viewHolder.marker).subscribe((aVoid)-> {
+                Intent intent = new Intent(mContext, UserOnMap.class);
+                intent.putExtra("CURRENT_LOCATION_LAT",message.getOrigin_lat());
+                intent.putExtra("CURRENT_LOCATION_LONG",message.getOrigin_long());
+                intent.putExtra("USERNAME",message.getSender());
+                mContext.startActivity(intent);
+
+            } );
             RxView.clicks(viewHolder.itemView)
                     .subscribe((aVoid)->{
                         if(viewHolder.isAnon){
@@ -158,6 +166,7 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
     public void setMessages(List<Message> Messages) {
         this.lastSet = Messages;
         this.Messages = Messages;
+        notifyDataSetChanged();
     }
     public void addMessage( Message msg) {
 

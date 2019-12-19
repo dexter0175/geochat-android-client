@@ -132,7 +132,6 @@ public class ChatActivity extends AppCompatActivity {
         Disposable dp = RxFirestore.observeQueryRef(ref, PersonalMessage.class)
                 .subscribe(messages -> {
                     messageAdapter.setMessages(messages);
-                    messageAdapter.notifyDataSetChanged();
                     recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
                 },throwable -> Log.d("ERR:", throwable.toString()));
 

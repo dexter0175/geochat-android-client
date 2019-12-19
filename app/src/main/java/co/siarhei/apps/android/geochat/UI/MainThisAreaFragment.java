@@ -135,8 +135,10 @@ public class MainThisAreaFragment extends Fragment {
                                     Location userLoc = new Location("");
                                     userLoc.setLongitude(msg.getOrigin_long());
                                     userLoc.setLatitude(msg.getOrigin_lat());
-                                    Log.d("MSG1", msg.toString() );
-                                    return myLoc.distanceTo(userLoc) <= 1;
+                                    double radius = getCurrentRadius();
+//                                    Log.d("MSG1", msg.toString() );
+                                    return myLoc.distanceTo(userLoc) <= radius;
+
                                 })
                                 .toList()
                 )
@@ -171,7 +173,7 @@ public class MainThisAreaFragment extends Fragment {
 
 
     public double getCurrentRadius() {
-        return Double.longBitsToDouble(prefs.getLong("locationRadius", 0));
+        return prefs.getLong("locationRadius", 0);
     }
 
 
