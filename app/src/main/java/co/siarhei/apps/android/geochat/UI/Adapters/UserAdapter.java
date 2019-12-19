@@ -61,6 +61,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         Location location = new Location("");
+
         location.setLatitude(user.getLocation().getLat());
         location.setLongitude(user.getLocation().getLng());
 

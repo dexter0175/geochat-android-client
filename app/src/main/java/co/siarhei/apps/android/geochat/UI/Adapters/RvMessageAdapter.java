@@ -17,9 +17,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,8 +31,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.rxbinding3.view.RxView;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+
 
 import java.util.List;
 
@@ -67,15 +63,20 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final Message message = Messages.get(i);
-        processImageWithStaticMap(viewHolder.icon_cont, message);
-        viewHolder.firstLine.setText(message.origin_lat+" "+message.origin_long);
+
+       // viewHolder.firstLine.setText(message.origin_lat+" "+message.origin_long);
+        viewHolder.icon_cont.setText( (message.getSender().charAt(0)+"").toUpperCase());
         viewHolder.secondLine.setText(message.contents);
-        viewHolder.author.setText(message.sender);
+        viewHolder.author.setText("from "+message.sender);
         viewHolder.isAnon = message.is_anonymaus;
+        if(message.is_anonymaus){
+            viewHolder.marker.setVisibility(View.GONE);
+        } else {
+            viewHolder.marker.setVisibility(View.VISIBLE);
+        }
 
 
-
-
+            RxView.clicks(viewHolder.marker).subscribe((aVoid)-> Toast.makeText(mContext,"Got to map",Toast.LENGTH_SHORT).show() );
             RxView.clicks(viewHolder.itemView)
                     .subscribe((aVoid)->{
                         if(viewHolder.isAnon){
@@ -106,19 +107,21 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView icon_cont;
+        TextView icon_cont;
         TextView firstLine;
         TextView secondLine;
         TextView author;
+        ImageView marker;
         boolean isAnon;
 
 
         public ViewHolder (View itemView){
             super(itemView);
             icon_cont = itemView.findViewById(R.id.icon_cont);
-            firstLine = itemView.findViewById(R.id.firstLine);
+            //firstLine = itemView.findViewById(R.id.firstLine);
             secondLine= itemView.findViewById(R.id.secondLine);
-            author= itemView.findViewById(R.id.author);
+            author = itemView.findViewById(R.id.author);
+            marker = itemView.findViewById(R.id.location_marker);
 
 
         }
@@ -145,40 +148,7 @@ public class RvMessageAdapter extends RecyclerView.Adapter<RvMessageAdapter.View
         notifyDataSetChanged();
     }
 
-    public void processImageWithStaticMap(final ImageView _image, Message _msg){
-        // Construct Google Map Static image request URL
-        String mapButtonStaticImageURL ="https://maps.googleapis.com/maps/api/staticmap" +
-                "?center=" + _msg.origin_lat + "," + _msg.origin_long +
-                "&format=png" +
-                "&zoom=15" +
-                "&size=180x180" +
-                "&maptype=road" +
-                "&key="+googleAPIKey +
-                "&style=feature:poi|visibility:off" +
-                "&style=feature:administrative|visibility:off" +
-                "&style=feature:road|visibility:simplified" +
-                "&style=feature:transit|visibility:off";
 
-        Picasso
-                .get()
-                .load(mapButtonStaticImageURL)
-                .into(new Target(){
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        _image.setBackground(new BitmapDrawable( mContext.getResources(), bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Exception e, final Drawable errorDrawable) {
-                        Log.d("PICASSO", "Failed!");
-                    }
-
-                    @Override
-                    public void onPrepareLoad(final Drawable placeHolderDrawable) {
-                        Log.d("PICASSO", "Prepare Load");
-                    }
-                });
-    }
     public void getGoogleAPIKey(){
         try {
             ApplicationInfo ai = mContext.getPackageManager().getApplicationInfo( mContext.getPackageName(), PackageManager.GET_META_DATA);

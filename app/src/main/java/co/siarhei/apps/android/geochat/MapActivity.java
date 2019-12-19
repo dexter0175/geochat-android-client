@@ -113,8 +113,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
 
-
-        // Create circle polygon on map
         circle = mMap.addCircle(new CircleOptions()
             .center(googInitialLocation)
             .radius(lowestRadius)

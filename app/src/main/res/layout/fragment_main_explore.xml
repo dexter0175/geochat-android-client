@@ -1,16 +1,17 @@
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.siarhei.apps.android.geochat.UI.MainExploreFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UI.MainConnectionsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="The 'Explore' feature is coming soon..."
-        android:textSize="18sp" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/rv_users">
 
-</FrameLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

@@ -2,6 +2,7 @@
 package co.siarhei.apps.android.geochat.UI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import co.siarhei.apps.android.geochat.MainActivity;
+import co.siarhei.apps.android.geochat.MapActivity;
 import co.siarhei.apps.android.geochat.Model.Message;
 import co.siarhei.apps.android.geochat.R;
 import co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter;
@@ -102,6 +104,7 @@ public class MainThisAreaFragment extends Fragment {
         getGoogleAPIKey();
 
         setupMapButton();
+        setupSendButton();
         setupMapButtonGeocoding();
         setupMessageListView();
 
@@ -216,8 +219,42 @@ public class MainThisAreaFragment extends Fragment {
                         }
                     });
         });
+
+        cd.add(
+                RxView
+                        .clicks(mMapButton)
+                        .subscribe((aVoid)->{
+                            openMapActivity();
+                        })
+        );
+
+
+
+    }
+
+    private void openMapActivity() {
+        Intent intent = new Intent(mainActivity.getApplicationContext(), MapActivity.class);
+        intent.putExtra("CURRENT_LOCATION_LAT",currentLocation.getLatitude());
+        intent.putExtra("CURRENT_LOCATION_LONG",currentLocation.getLongitude());
+
+        startActivityForResult(intent,);
+    }
+
+
+    public void setupMapButtonGeocoding() {
+        RxLocation rxLocation = new RxLocation(getContext());
+        mainActivity.cd.add( mainActivity.locationObservable
+                .flatMap(location -> rxLocation.geocoding().fromLocation(location).toObservable())
+                .subscribe(address -> {
+                   mMapButtonTitle.setText(address.getAddressLine(0));
+                   mMapButtonSubtitle.setText(address.getLatitude()+" "+address.getLongitude());
+                   setupMapButton();
+                },throwable -> {})
+        );
+    }
+    private void setupSendButton() {
         cd.add(RxView.clicks(mSendButton)
-                .filter((aVoid) -> (mTextSend.getText().toString().length()>=3))
+                .filter((aVoid) -> (mTextSend.getText().toString().length()>=1))
                 .flatMapSingle((aVoid)->{
                     Message msg = new Message(mTextSend.getText().toString());
                     msg.setOrigin_lat(Util.getCurrentLocation(prefs).getLatitude());
@@ -241,23 +278,7 @@ public class MainThisAreaFragment extends Fragment {
                     //messageAdapter.addMessage(msg);
                 })
         );
-    }
-
-
-
-
-
-    public void setupMapButtonGeocoding() {
-        RxLocation rxLocation = new RxLocation(getContext());
-        mainActivity.cd.add( mainActivity.locationObservable
-                .flatMap(location -> rxLocation.geocoding().fromLocation(location).toObservable())
-                .subscribe(address -> {
-                   mMapButtonTitle.setText(address.getAddressLine(0));
-                   mMapButtonSubtitle.setText(address.getLatitude()+" "+address.getLongitude());
-                   setupMapButton();
-                },throwable -> {})
-        );
-    }
+        }
 
 
 

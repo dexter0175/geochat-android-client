@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements
                 RxFirestore.getDocument(doc)
                         .subscribe(snapshot->{
                            this.user = snapshot.toObject(User.class);
+                            insertUserSpecificLabels(this.user);
                         },throwable -> {});
             }
     public void setCurrentLocation(double _lat, double _long){
@@ -156,14 +157,13 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-    public void insertUserSpecificLabels (){
+    public void insertUserSpecificLabels (User usr){
 
         // Drawer Panel Dynamically Change Title
         TextView vDrawerTitle =  vDrawerNavView.getHeaderView(0).findViewById(R.id.main_drawer_header_title);
-        vDrawerTitle.setText(user.first_name + " " + user.last_name);
+        vDrawerTitle.setText(usr.first_name + " " + usr.last_name);
 
     }
-
 
 
 
@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements
         tabHost.setupWithViewPager(pager);
 
     }
-
 
 
     public void authoriseGeolocationFunctionality() {
@@ -202,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10000);
         this.locationObservable = rxLocation.location().updates(locationRequest);
+
         cd.add( locationObservable
                 .subscribe(this::setCurrentLocation, throwable -> {})
         );
@@ -214,8 +214,6 @@ public class MainActivity extends AppCompatActivity implements
                 .subscribe(()->{}, throwable -> {})
         );
     }
-
-
 
 
 
@@ -247,17 +245,12 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main_toolbar, menu);
         return true;
     }
-
-
 
 
 
@@ -278,10 +271,6 @@ public class MainActivity extends AppCompatActivity implements
 
         return true;
     }
-
-
-
-
 
 
 
@@ -334,10 +323,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-
-
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // in panekl
@@ -385,7 +370,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -410,9 +394,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -424,9 +405,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-
-
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -434,8 +412,6 @@ public class MainActivity extends AppCompatActivity implements
         // TODO SETUP REMOVEUPDATES
 
     }
-
-
 
 
 

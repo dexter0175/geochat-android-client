@@ -132,12 +132,13 @@ public class RegistrationActivity extends AppCompatActivity implements
         _user.first_name = _first_name.getText().toString();
         _user.last_name = _last_name.getText().toString();
         _user.email_address = _email_address.getText().toString();
-        _user.setFireID(mAuth.getUid());
+
 
 
         RxFirebaseAuth.createUserWithEmailAndPassword(mAuth, _user.email_address,_password.getText().toString())
                 .flatMapCompletable(authResult -> {
                    DocumentReference document = firestore.collection("Users").document(authResult.getUser().getUid());
+                    _user.setFireID(authResult.getUser().getUid());
                    return RxFirestore.setDocument(document,_user);
                 })
                 .subscribe(() -> {

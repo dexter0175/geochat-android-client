@@ -21,7 +21,7 @@
 
 
     <string name="title_activity_map">Map</string>
-    <string name="map_hint">Use the zoom buttons below to select the radius around your current location…</string>
+    <string name="map_hint">Use slider to setup Radius.</string>
 
     <string name="drawer_section_actions">User Actions</string>
     <string name="drawer_item_settings">Settings</string>
