@@ -1,0 +1,175 @@
+@startuml
+
+title __GEOCHAT's Class Diagram__\n
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.AboutActivity {
+        + onBackPressed()
+        # onCreate()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.ChatActivity {
+        ~ btn_send : ImageView
+        ~ firestore : FirebaseFirestore
+        ~ intent : Intent
+        ~ mAuth : FirebaseAuth
+        ~ messages : List<PersonalMessage>
+        ~ profile_image : CircleImageView
+        ~ recyclerView : RecyclerView
+        ~ text_send : EditText
+        ~ toolbar : Toolbar
+        ~ username : TextView
+        - cd : CompositeDisposable
+        - receiver_id : String
+        # onCreate()
+        - setUserRelated()
+        - setupRecyclerView()
+        - setupSendButton()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.MainActivity {
+        + cd : CompositeDisposable
+        + locationObservable : Observable<Location>
+        ~ FEEDBACK_QUIZ_REQUEST : int
+        ~ GEOLOCATION_PERMISSION_REQUEST : int
+        ~ firestore : FirebaseFirestore
+        ~ mAuth : FirebaseAuth
+        ~ pager : ViewPager
+        ~ prefs : SharedPreferences
+        ~ tabHost : TabLayout
+        ~ vDrawerLayout : DrawerLayout
+        ~ vDrawerNavView : NavigationView
+        ~ vToolbar : Toolbar
+        + authoriseGeolocationFunctionality()
+        + getCurrentLocation()
+        + getCurrentRadius()
+        + insertUserSpecificLabels()
+        + onCreateOptionsMenu()
+        + onNavigationItemSelected()
+        + onOptionsItemSelected()
+        + onPrepareOptionsMenu()
+        + onRequestPermissionsResult()
+        + setCurrentLocation()
+        + setCurrentLocation()
+        + setCurrentRadius()
+        + setupGeolocationUpdates()
+        + setupMaterialTabs()
+        # onActivityResult()
+        # onCreate()
+        # onPause()
+        # onResume()
+        - getUser()
+        - networkCheck()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.MapActivity {
+        + lowestRadius : float
+        ~ circle : Circle
+        ~ googInitialLocation : LatLng
+        ~ initialLocation : Location
+        - mMap : GoogleMap
+        + onBackPressed()
+        + onMapReady()
+        + onProgressChanged()
+        + onStartTrackingTouch()
+        + onStopTrackingTouch()
+        # onCreate()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.RegistrationActivity {
+        ~ bottomSheetBehavior : BottomSheetBehavior
+        ~ prefs : SharedPreferences
+        {static} - NUM_PAGES : int
+        - firestore : FirebaseFirestore
+        - mAuth : FirebaseAuth
+        - mPager : ViewPager
+        - mPagerAdapter : PagerAdapter
+        + activateBottomSheet()
+        + createUserAccountAndProceed()
+        + onBackPressed()
+        + onFragmentInteraction()
+        + setupRegistrationBottomSheet()
+        + showSigninDialog()
+        + signinUserAccount()
+        # onCreate()
+        # onResume()
+        - networkCheck()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.RegistrationActivity.WelcomeinfoPagerAdaptor {
+        + WelcomeinfoPagerAdaptor()
+        + getCount()
+        + getItem()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.SplashscreenActivity {
+        ~ intent : Intent
+        ~ prefs : SharedPreferences
+        - mAuth : FirebaseAuth
+        # onCreate()
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.UserOnMap {
+        ~ googInitialLocation : LatLng
+        ~ initialLocation : Location
+        - mMap : GoogleMap
+        - username : String
+        + onBackPressed()
+        + onMapReady()
+        # onCreate()
+    }
+  }
+  
+
+  co.siarhei.apps.android.geochat.AboutActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.ChatActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.ChatActivity o-- co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter : messageAdapter
+  co.siarhei.apps.android.geochat.ChatActivity o-- co.siarhei.apps.android.geochat.Model.User : user
+  co.siarhei.apps.android.geochat.MainActivity .up.|> com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+  co.siarhei.apps.android.geochat.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.MainActivity o-- co.siarhei.apps.android.geochat.Model.User : user
+  co.siarhei.apps.android.geochat.MainActivity o-- co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter : pagerAdapter
+  co.siarhei.apps.android.geochat.MapActivity .up.|> android.widget.SeekBar.OnSeekBarChangeListener
+  co.siarhei.apps.android.geochat.MapActivity .up.|> com.google.android.gms.maps.OnMapReadyCallback
+  co.siarhei.apps.android.geochat.MapActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment1.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment2.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment3.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment4.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.RegistrationActivity +-down- co.siarhei.apps.android.geochat.RegistrationActivity.WelcomeinfoPagerAdaptor
+  co.siarhei.apps.android.geochat.RegistrationActivity.WelcomeinfoPagerAdaptor -up-|> androidx.fragment.app.FragmentStatePagerAdapter
+  co.siarhei.apps.android.geochat.SplashscreenActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.UserOnMap .up.|> com.google.android.gms.maps.OnMapReadyCallback
+  co.siarhei.apps.android.geochat.UserOnMap -up-|> androidx.appcompat.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

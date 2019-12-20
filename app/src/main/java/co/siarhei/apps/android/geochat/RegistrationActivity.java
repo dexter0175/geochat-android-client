@@ -167,14 +167,7 @@ public class RegistrationActivity extends AppCompatActivity implements
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> signinUserAccount(_email.getText().toString(), _pass.getText().toString()));
 
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id)
-            {
-                dialog.cancel();
-
-            }
-        });
+        alertDialogBuilder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
         alertDialogBuilder.show();
 
@@ -187,8 +180,16 @@ public class RegistrationActivity extends AppCompatActivity implements
 
     @SuppressLint("CheckResult")
     public void signinUserAccount(String _email, String _pass){
+        Log.d("Rxfirebase2", "User logged ");
+//        mAuth.signInWithEmailAndPassword(_email, _pass).addOnSuccessListener(res->{
+//            if(res.getUser() != null){
+//                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+//                finish();
+//            }
+//        });
         RxFirebaseAuth.signInWithEmailAndPassword(mAuth, _email, _pass)
                 .map(authResult -> authResult.getUser() != null)
+
                 .subscribe(logged -> {
                     Log.d("Rxfirebase2", "User logged " + logged);
                     startActivity(new Intent(RegistrationActivity.this, MainActivity.class));

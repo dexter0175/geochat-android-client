@@ -1,0 +1,158 @@
+@startuml
+
+title __ADAPTERS's Class Diagram__\n
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter {
+            {static} - MSG_TYPE_GEO : int
+            {static} - MSG_TYPE_LEFT : int
+            {static} - MSG_TYPE_RIGHT : int
+            - imageurl : String
+            - mContext : Context
+            - mMessages : List<PersonalMessage>
+            + ChatMessageAdapter()
+            + addMessage()
+            + getItemCount()
+            + getItemViewType()
+            + getMessages()
+            + onBindViewHolder()
+            + onCreateViewHolder()
+            + resetMessages()
+            + setMessages()
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter.ViewHolder {
+            ~ message_text : TextView
+            ~ profile_image : CircleImageView
+            ~ ViewHolder()
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter {
+            - fragments : ArrayList<Fragment>
+            - titles : ArrayList<String>
+            + MainViewPagerAdapter()
+            + addFragment()
+            + getCount()
+            + getItem()
+            + getPageTitle()
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter {
+            ~ prefs : SharedPreferences
+            - Messages : List<Message>
+            - googleAPIKey : String
+            - lastSet : List<Message>
+            - mContext : Context
+            + RvMessageAdapter()
+            + addMessage()
+            + getGoogleAPIKey()
+            + getItemCount()
+            + getMessages()
+            + notifyRadiusChanged()
+            + onBindViewHolder()
+            + onCreateViewHolder()
+            + resetMessages()
+            + setMessages()
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter.ViewHolder {
+            ~ author : TextView
+            ~ firstLine : TextView
+            ~ icon_cont : TextView
+            ~ isAnon : boolean
+            ~ marker : ImageView
+            ~ secondLine : TextView
+            + ViewHolder()
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter {
+            - cd : CompositeDisposable
+            - mContext : Context
+            - mUsers : List<User>
+            - prefs : SharedPreferences
+            + UserAdapter()
+            + addUser()
+            + getItemCount()
+            + onBindViewHolder()
+            + onCreateViewHolder()
+            + resetUsers()
+            + setUsers()
+            + updateUser()
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter.ViewHolder {
+            ~ location : TextView
+            ~ online_indicator : RelativeLayout
+            ~ profile_image : CircleImageView
+            ~ username : TextView
+            + ViewHolder()
+        }
+      }
+    }
+  }
+  
+
+  co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter +-down- co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter.ViewHolder
+  co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter +-down- co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter.ViewHolder
+  co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter +-down- co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter.ViewHolder
+  co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

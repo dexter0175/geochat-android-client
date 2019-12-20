@@ -1,0 +1,251 @@
+@startuml
+
+title __APP's Class Diagram__\n
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.AboutActivity {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.BuildConfig {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.ChatActivity {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace Location {
+      class co.siarhei.apps.android.geochat.Location.UserLocation {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.MainActivity {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.MapActivity {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace Model {
+      class co.siarhei.apps.android.geochat.Model.Chat {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace Model {
+      class co.siarhei.apps.android.geochat.Model.Message {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace Model {
+      class co.siarhei.apps.android.geochat.Model.PersonalMessage {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace Model {
+      class co.siarhei.apps.android.geochat.Model.User {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.RegistrationActivity {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.SplashscreenActivity {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace Adapters {
+        class co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      class co.siarhei.apps.android.geochat.UI.MainConnectionsFragment {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      class co.siarhei.apps.android.geochat.UI.MainExploreFragment {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      class co.siarhei.apps.android.geochat.UI.MainThisAreaFragment {
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace WelcomeFragments {
+        class co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment1 {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace WelcomeFragments {
+        class co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment2 {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace WelcomeFragments {
+        class co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment3 {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace UI {
+      namespace WelcomeFragments {
+        class co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment4 {
+        }
+      }
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    class co.siarhei.apps.android.geochat.UserOnMap {
+    }
+  }
+  
+
+  namespace co.siarhei.apps.android.geochat {
+    namespace Utils {
+      class co.siarhei.apps.android.geochat.Utils.Util {
+      }
+    }
+  }
+  
+
+  co.siarhei.apps.android.geochat.AboutActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.ChatActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.ChatActivity o-- co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter : messageAdapter
+  co.siarhei.apps.android.geochat.ChatActivity o-- co.siarhei.apps.android.geochat.Model.User : user
+  co.siarhei.apps.android.geochat.MainActivity .up.|> com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+  co.siarhei.apps.android.geochat.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.MainActivity o-- co.siarhei.apps.android.geochat.Model.User : user
+  co.siarhei.apps.android.geochat.MainActivity o-- co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter : pagerAdapter
+  co.siarhei.apps.android.geochat.MapActivity .up.|> android.widget.SeekBar.OnSeekBarChangeListener
+  co.siarhei.apps.android.geochat.MapActivity .up.|> com.google.android.gms.maps.OnMapReadyCallback
+  co.siarhei.apps.android.geochat.MapActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.Model.User o-- co.siarhei.apps.android.geochat.Location.UserLocation : location
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment1.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment2.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment3.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity .up.|> co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment4.OnFragmentInteractionListener
+  co.siarhei.apps.android.geochat.RegistrationActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.SplashscreenActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  co.siarhei.apps.android.geochat.UI.Adapters.ChatMessageAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  co.siarhei.apps.android.geochat.UI.Adapters.MainViewPagerAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  co.siarhei.apps.android.geochat.UI.MainConnectionsFragment -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UI.MainConnectionsFragment o-- co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter : usersAdapter
+  co.siarhei.apps.android.geochat.UI.MainExploreFragment -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UI.MainExploreFragment o-- co.siarhei.apps.android.geochat.UI.Adapters.UserAdapter : usersAdapter
+  co.siarhei.apps.android.geochat.UI.MainThisAreaFragment -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UI.MainThisAreaFragment o-- co.siarhei.apps.android.geochat.MainActivity : mainActivity
+  co.siarhei.apps.android.geochat.UI.MainThisAreaFragment o-- co.siarhei.apps.android.geochat.UI.Adapters.RvMessageAdapter : messageAdapter
+  co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment1 -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment1 o-- co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment1.OnFragmentInteractionListener : mListener
+  co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment2 -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment2 o-- co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment2.OnFragmentInteractionListener : mListener
+  co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment3 -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UI.WelcomeFragments.RegistWelcomeinfoFragment4 -up-|> androidx.fragment.app.Fragment
+  co.siarhei.apps.android.geochat.UserOnMap .up.|> com.google.android.gms.maps.OnMapReadyCallback
+  co.siarhei.apps.android.geochat.UserOnMap -up-|> androidx.appcompat.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
